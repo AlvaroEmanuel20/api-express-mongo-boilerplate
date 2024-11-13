@@ -10,6 +10,7 @@ export default {
     jwtExp: process.env.JWT_EXP,
     refreshJwtSecret: process.env.REFRESH_JWT_SECRET,
     refreshJwtExp: process.env.REFRESH_JWT_EXP,
+    passwordHashSalt: Number(process.env.PASSWORD_HASH_SALT),
   },
   email: {
     smtp: process.env.SMTP_SERVER,

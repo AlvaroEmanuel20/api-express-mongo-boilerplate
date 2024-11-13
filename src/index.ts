@@ -8,6 +8,7 @@ import errors from './middlewares/errors';
 import compression from 'compression';
 import morgan from 'morgan';
 import logger from './utils/logger';
+import apiRouter from './api.routes';
 
 const app = express();
 connectToDatabase();
@@ -34,6 +35,8 @@ app.get('/health-check', (req, res) => {
     checkedAt: new Date(),
   });
 });
+
+app.use('/api', apiRouter);
 
 app.use(errors);
 
