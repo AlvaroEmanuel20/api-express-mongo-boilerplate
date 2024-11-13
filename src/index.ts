@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import environment from './config/environment';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -10,7 +10,6 @@ import morgan from 'morgan';
 import logger from './utils/logger';
 
 const app = express();
-const PORT = process.env.PORT;
 connectToDatabase();
 
 const limiter = rateLimit({
@@ -19,7 +18,7 @@ const limiter = rateLimit({
 });
 
 app.use(limiter);
-app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
+app.use(morgan(environment.isProduction ? 'combined' : 'dev'));
 app.use(cors());
 
 app.use(express.json());
@@ -38,8 +37,8 @@ app.get('/health-check', (req, res) => {
 
 app.use(errors);
 
-const server = app.listen(PORT, () => {
-  logger.info(`Server running in ${PORT} (${process.env.NODE_ENV})`);
+const server = app.listen(environment.port, () => {
+  logger.info(`Server running in ${environment.port} (${environment.mode})`);
 });
 
 process.on('SIGTERM', () => {
