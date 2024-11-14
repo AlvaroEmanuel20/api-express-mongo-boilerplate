@@ -14,3 +14,7 @@ export default async function connectToDatabase() {
 mongoose.connection.on('error', (error) => {
   logger.error(`MongoDB after initial connection error: ${error}`);
 });
+
+mongoose.connection.on('disconnected', (error) => {
+  logger.error(`MongoDB disconnected error: ${error}`);
+});

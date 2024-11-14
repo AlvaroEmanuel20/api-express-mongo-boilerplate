@@ -4,18 +4,13 @@ import {
   ApiError,
   ConflictDataError,
   NotFoundError,
-} from '../utils/errors.classes';
+} from '../utils/errorsClasses';
 
 export default class UserController {
   public static async getUser(req: Request, res: Response) {
-    try {
-      const user = await UserServices.getUserById(req.params.userId);
-      res.json(user);
-    } catch (error) {
-      if (error instanceof NotFoundError) {
-        throw new ApiError(error.message, 404, 'users');
-      }
-    }
+    const user = await UserServices.getUserById(req.params.userId);
+    if (!user) throw new ApiError('User not found', 404, 'users');
+    res.json(user);
   }
 
   public static async createUser(req: Request, res: Response) {

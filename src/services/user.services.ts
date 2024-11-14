@@ -1,14 +1,15 @@
 import environment from '../config/environment';
-import { CreateUserData, UpdateUserData } from '../interfaces/user.interfaces';
+import {
+  CreateUserData,
+  UpdateUserData,
+} from '../validations/user.validations';
 import { User } from '../models/user.model';
 import bcryptjs from 'bcryptjs';
-import { ConflictDataError, NotFoundError } from '../utils/errors.classes';
+import { ConflictDataError, NotFoundError } from '../utils/errorsClasses';
 
 export default class UserServices {
   public static async getUserById(userId: string) {
-    return await User.findById(userId).orFail(
-      new NotFoundError('User not found')
-    );
+    return await User.findById(userId);
   }
 
   public static async createUser(data: CreateUserData) {
@@ -29,9 +30,8 @@ export default class UserServices {
   }
 
   public static async updateUserById(userId: string, data: UpdateUserData) {
-    const user = await User.findById(userId).orFail(
-      new NotFoundError('User not found')
-    );
+    const user = await User.findById(userId);
+    if (!user) throw new NotFoundError('User not found');
 
     if (data.email) {
       const emailExists = await User.findOne({ email: data.email });
@@ -54,10 +54,8 @@ export default class UserServices {
   }
 
   public static async deleteUserById(userId: string) {
-    const userDeleted = await User.findByIdAndDelete(userId).orFail(
-      new NotFoundError('User not found')
-    );
-
+    const userDeleted = await User.findByIdAndDelete(userId);
+    if (!userDeleted) throw new NotFoundError('User not found');
     return userDeleted._id.toString();
   }
 }
