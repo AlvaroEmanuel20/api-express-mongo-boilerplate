@@ -35,3 +35,4 @@ export const userIdSchema = z.object({
 
 export type CreateUserData = z.infer<typeof createUserSchema.shape.body>;
 export type UpdateUserData = Partial<CreateUserData>;
+export type UserId = z.infer<typeof userIdSchema.shape.params>;

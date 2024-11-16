@@ -6,6 +6,7 @@ import {
   updateUserSchema,
   userIdSchema,
 } from '../validations/user.validations';
+import authenticator from '../middlewares/authenticator';
 
 const userRouter = Router();
 
@@ -15,7 +16,7 @@ userRouter
 
 userRouter
   .route('/:userId')
-  .all(validator(userIdSchema))
+  .all(authenticator, validator(userIdSchema))
   .get(UserController.getUser)
   .patch(validator(updateUserSchema), UserController.updateUser)
   .delete(UserController.deleteUser);
