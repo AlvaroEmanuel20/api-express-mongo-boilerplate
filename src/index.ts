@@ -10,8 +10,6 @@ import compression from 'compression';
 import morgan from 'morgan';
 import logger from './utils/logger';
 import apiRouter from './api.routes';
-import passport from 'passport';
-import { jwtStrategy } from './config/passport';
 import cookieParser from 'cookie-parser';
 
 const app = express();
@@ -32,9 +30,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(compression());
 app.use(helmet());
-
-app.use(passport.initialize());
-passport.use(jwtStrategy);
 
 app.get('/health-check', (req, res) => {
   res.json({

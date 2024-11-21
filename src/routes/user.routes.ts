@@ -10,9 +10,7 @@ import authenticator from '../middlewares/authenticator';
 
 const userRouter = Router();
 
-userRouter
-  .route('/')
-  .post(validator(createUserSchema), UserController.createUser);
+userRouter.post('/', validator(createUserSchema), UserController.createUser);
 
 userRouter
   .route('/:userId')
