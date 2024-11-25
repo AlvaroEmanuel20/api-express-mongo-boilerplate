@@ -1,6 +1,6 @@
 import environment from './environment';
 import mongoose from 'mongoose';
-import logger from '../utils/logger';
+import logger from './logger';
 
 export default async function connectToDatabase() {
   try {

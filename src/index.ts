@@ -8,7 +8,7 @@ import connectToDatabase from './config/database';
 import errors from './middlewares/errors';
 import compression from 'compression';
 import morgan from 'morgan';
-import logger from './utils/logger';
+import logger, { httpLogger } from './config/logger';
 import apiRouter from './api.routes';
 import cookieParser from 'cookie-parser';
 
@@ -21,7 +21,15 @@ const limiter = rateLimit({
 });
 
 app.use(limiter);
-app.use(morgan(environment.isProduction ? 'combined' : 'dev'));
+
+app.use(
+  morgan(environment.isProduction ? 'combined' : 'dev', {
+    stream: {
+      write: (httpLog) => httpLogger.http(httpLog.trim()),
+    },
+  })
+);
+
 app.use(cors());
 
 app.use(cookieParser());
