@@ -6,6 +6,7 @@ export default {
   mode: process.env.NODE_ENV,
   isProduction: process.env.NODE_ENV === 'production',
   port: Number(process.env.PORT),
+  logLevel: process.env.LOG_LEVEL,
   mongoUri: process.env.MONGO_URI,
   auth: {
     jwtSecret: process.env.JWT_SECRET,
@@ -17,5 +18,9 @@ export default {
   },
   email: {
     smtp: process.env.SMTP_SERVER,
+    smtpPort: Number(process.env.SMTP_PORT),
+    fromEmail: process.env.FROM_EMAIL,
+    emailAuthUser: process.env.EMAIL_AUTH_USER,
+    emailAuthPassword: process.env.EMAIL_AUTH_PASSWORD,
   },
 };
